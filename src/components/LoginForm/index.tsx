@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { Button, Form, Input } from "antd";
 import "./index.css";
 import { useSignIn } from "../../hooks/auth.hook";

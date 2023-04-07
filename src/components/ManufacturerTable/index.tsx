@@ -5,7 +5,6 @@ import {
   Pagination,
   Switch,
   Table,
-  Typography,
   message,
 } from "antd";
 import apiService from "../../api/ApiService";
