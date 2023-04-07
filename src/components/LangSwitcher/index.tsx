@@ -1,9 +1,10 @@
+import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLanguage } from "../../store/lang";
 import { useTranslation } from "react-i18next";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
-const LangSwitcher = () => {
+const LangSwitcher: FC<{ style?: any }> = ({ style }) => {
   const dispatch = useDispatch();
   const language = useSelector((state: any) => state.language.language);
   const { i18n } = useTranslation();
@@ -19,7 +20,7 @@ const LangSwitcher = () => {
   };
 
   return (
-    <div>
+    <div style={{ ...style, zIndex: "100", cursor: "pointer" }}>
       <button
         onClick={() => {
           handleChangeLanguage();

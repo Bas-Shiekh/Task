@@ -1,10 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import LangService from "../api/LangService";
 
 interface IinitialState {
   language: string;
 }
 
-const initialState: IinitialState = { language: "en" };
+const initialState: IinitialState = {
+  language: LangService.getToken() ? `${LangService.getToken()}` : "en",
+};
 
 const languageSlice = createSlice({
   name: "language",

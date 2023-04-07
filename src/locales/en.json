@@ -5,5 +5,9 @@
   "status": "STATUS",
   "operation": "OPERATION",
   "sort_order": "SORT ORDER",
-  "manufacturers": "Manufactures"
+  "manufacturers": "Manufactures",
+  "login": "Login",
+  "email": "Email",
+  "password": "Password",
+  "submit": "Submit"
 }

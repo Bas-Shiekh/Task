@@ -5,5 +5,9 @@
   "status": "الحالة",
   "operation": "العمليات",
   "sort_order": "الترتيب",
-  "manufacturers": "المصنعيات"
+  "manufacturers": "المصنعيات",
+  "login": "تسجيل الدخول",
+  "email": "الايميل",
+  "password": "كلمة المرور",
+  "submit": "تسجيل دخول"
 }
