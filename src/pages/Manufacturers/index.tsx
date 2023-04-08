@@ -1,14 +1,20 @@
 import React, { FC, useState } from "react";
 import { ManufacturerTable } from "../../components";
-import { Button, Input, Layout, Menu, Modal, theme } from "antd";
+import { Button, Input, Layout, Menu, MenuProps, Modal, theme } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import Admin from "../../assets/me.png";
-import { UserOutlined } from "@ant-design/icons";
+import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import Avatar from "../../components/Avatar";
 import LangSwitcher from "../../components/LangSwitcher";
 import { useTranslation } from "react-i18next";
 import AddForm from "../../components/AddForm";
+import JwtService from "../../api/JwtService";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userAuthActions } from "../../store/userAuth";
+
+type MenuItem = Required<MenuProps>["items"][number];
 
 const Manufacturers: FC<{ language: string }> = ({ language }) => {
   const {
@@ -16,6 +22,44 @@ const Manufacturers: FC<{ language: string }> = ({ language }) => {
   } = theme.useToken();
   const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { logout } = userAuthActions;
+
+  const handleLogout = () => {
+    JwtService.destroyToken();
+    if (!JwtService.getToken()) {
+      dispatch(logout());
+      navigate("/login");
+    }
+  };
+
+  function getItem(
+    label: React.ReactNode,
+    key: React.Key,
+    icon?: React.ReactNode,
+    action?: Function,
+    children?: MenuItem[]
+  ): MenuItem {
+    return {
+      key,
+      icon,
+      children,
+      label,
+      action,
+    } as MenuItem;
+  }
+
+  const items: MenuItem[] = [
+    getItem(t("manufacturers"), "1", <UserOutlined />),
+    getItem(
+      <Button type="ghost" onClick={handleLogout} style={{ color: "#ff4d4f" }}>
+        {t("logout")}
+      </Button>,
+      "2",
+      <LogoutOutlined style={{ color: "#ff4d4f" }} />
+    ),
+  ];
 
   return (
     <main
@@ -28,11 +72,7 @@ const Manufacturers: FC<{ language: string }> = ({ language }) => {
             theme="dark"
             mode="inline"
             defaultSelectedKeys={["1"]}
-            items={[UserOutlined].map((icon, index) => ({
-              key: String(index + 1),
-              icon: React.createElement(icon),
-              label: t("manufacturers"),
-            }))}
+            items={items}
           />
         </Sider>
         <Layout>
@@ -60,6 +100,7 @@ const Manufacturers: FC<{ language: string }> = ({ language }) => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
+                width: '100%'
               }}
             >
               <Input placeholder="Search" style={{ width: "auto" }} />

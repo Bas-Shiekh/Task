@@ -7,11 +7,17 @@ class ApiService {
   constructor() {
     this.api = axios.create({
       baseURL: process.env.REACT_APP_BASE_URL,
-      headers: {
-        Authorization: `Bearer ${JwtService.getToken()}`,
-      },
+      // headers: {
+      //   Authorization: `Bearer ${}`,
+      // },
     });
-
+this.api.interceptors.request.use((config) => {
+      const token = JwtService.getToken(); // get the token value from wherever you store it
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    });
     this.api.interceptors.response.use(
       (res) => res,
       (err) => Promise.reject(err)

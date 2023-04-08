@@ -11,9 +11,7 @@ const ImageUploader: React.FC<IImage> = ({ base64Image, setBase64Image }) => {
     reader.onload = () => {
       setBase64Image(reader.result);
     };
-    reader.onerror = (error) => {
-      console.log("Error: ", error);
-    };
+    reader.onerror = (error) => {};
   };
 
   const uploadButton = (

@@ -9,5 +9,6 @@
   "login": "Login",
   "email": "Email",
   "password": "Password",
-  "submit": "Submit"
+  "submit": "Submit",
+  "logout": "Logout"
 }

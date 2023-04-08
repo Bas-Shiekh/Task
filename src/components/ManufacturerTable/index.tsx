@@ -1,12 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import {
-  Form,
-  Modal,
-  Pagination,
-  Switch,
-  Table,
-  message,
-} from "antd";
+import { Form, Modal, Pagination, Switch, Table, message } from "antd";
 import apiService from "../../api/ApiService";
 import { IUserName, Item } from "../../interfaces";
 import EditForm from "../EditForm";
@@ -16,7 +9,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 const ManufacturerTable: FC = () => {
   const { t } = useTranslation();
-  const lang = useSelector((state: any) => state.language.language);
+  const lang = useSelector((state: any) => state);
   const [form] = Form.useForm();
   const [data, setData] = useState<Item[]>([]);
   const [isChanged, setIsChanged] = useState<boolean>(false);
@@ -77,7 +70,6 @@ const ManufacturerTable: FC = () => {
   };
 
   const handleStatusChange = async (record: Item) => {
-    console.log(record.status)
     const response = await apiService.put(
       `api/v1/vendor/manufacturers/status/${record.id}`,
       { status: record.status === 1 ? 0 : 1 }
@@ -153,6 +145,7 @@ const ManufacturerTable: FC = () => {
   ];
 
   const rowKey = (record: Item) => record.id;
+  if (!data) return <p>loading ...</p>;
 
   return (
     <Form form={form} component={false}>
@@ -177,6 +170,7 @@ const ManufacturerTable: FC = () => {
         columns={columns}
         pagination={false}
         rowKey={rowKey}
+        scroll={{ x: 500 }}
       />
       <Pagination
         defaultCurrent={1}
